@@ -4,14 +4,24 @@ import pickle
 from datetime import datetime
 from hash_fcns import *
 
+
 # Prints the hash digests for all contents of a directory.
 def checkHashDictonaryForDirectoryContents(directory, dictionary, dup_file, non_dup_file):
+    dup = 0
+    non_dup = 0
+    total = 0
     for fileName, hashDigest in getHashDigestForDirectoryContents(directory):
+        total = total + 1
         out = fileName + '\n'
         if hashDigest in dictionary:
+            dup = dup + 1
             dup_file.write(out)
         else:
+            non_dup = non_dup + 1
             non_dup_file.write(out)
+    print "Total Files: %s" % total
+    print "Duplicate Files: %s" % dup
+    print "Non-Duplicate Files: %s" % non_dup
 
 
 def processPathArgument(path):
@@ -23,7 +33,7 @@ def processPathArgument(path):
 
 # Display command line usage information.
 def usage():
-    print "\nUsage: gen_md5_dictionary.py <path> <dict-file> <dup-file> <non-dup-file>\n"
+    print "\nUsage: compare_against_dict.py <path> <dict-file> <dup-file> <non-dup-file>\n"
 
 # Handles processing when run from the command line.
 def main(args):
@@ -45,6 +55,7 @@ def main(args):
     print "\nStarting: %s\n" % start
         
     checkHashDictonaryForDirectoryContents(path, d, dup_file, non_dup_file)
+    
     
     finish = datetime.now()
     print "\nFinished: %s" % finish
