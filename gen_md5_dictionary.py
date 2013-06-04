@@ -8,9 +8,17 @@ from hash_fcns import *
 d = {}
 
 # Prints the hash digests for all contents of a directory.
-def buildHashDictonaryForDirectoryContents(directory):
+def buildHashDictonaryForDirectoryContents(directory, dup_file, compare_file):
+    total = 0
+    dup = 0
     for fileName, hashDigest in getHashDigestForDirectoryContents(directory):
-        addToHashDict(hashDigest, fileName)
+        total = total + 1
+        if hashDigest in d:
+            dup = dup + 1
+            dup_file.write(fileName + '\n')
+            compare_file.write(fileName + " " + dictionary[hashDigest] + '\n')
+        else:
+            addToHashDict(hashDigest, fileName)
 
 def addToHashDict(key, value):
     d[key] = value;
@@ -24,7 +32,7 @@ def processPathArgument(path):
 
 # Display command line usage information.
 def usage():
-    print "\nUsage: gen_md5_dictionary.py <path> <file>\n"
+    print "\nUsage: gen_md5_dictionary.py <path> <file> <dup-file> <comp-file>\n"
 
 # Handles processing when run from the command line.
 def main(args):
@@ -34,6 +42,10 @@ def main(args):
     except ValueError:
         usage()
         return
+        
+    dup_file = open(args[2], 'w')
+    compare_dup_file = open(args[3], 'w')
+        
 
     start = datetime.now();
     print "\nStarting: %s\n" % start
@@ -58,7 +70,7 @@ def main(args):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
+    if len(sys.argv) != 4:
         usage()
         sys.exit(2)
 
