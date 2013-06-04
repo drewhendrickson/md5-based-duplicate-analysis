@@ -16,9 +16,12 @@ def buildHashDictonaryForDirectoryContents(directory, dup_file, compare_file):
         if hashDigest in d:
             dup = dup + 1
             dup_file.write(fileName + '\n')
-            compare_file.write(fileName + " " + dictionary[hashDigest] + '\n')
+            compare_file.write(fileName + " " + d[hashDigest] + '\n')
         else:
             addToHashDict(hashDigest, fileName)
+    print "Total Files: %s" % total
+    print "Duplicate Files: %s" % dup
+    
 
 def addToHashDict(key, value):
     d[key] = value;
@@ -43,21 +46,24 @@ def main(args):
         usage()
         return
         
-    dup_file = open(args[2], 'w')
-    compare_dup_file = open(args[3], 'w')
-        
-
     start = datetime.now();
     print "\nStarting: %s\n" % start
+
+    dup_file = open(args[2], 'w')
+    compare_dup_file = open(args[3], 'w')
+
 
     if os.path.isfile(path):
         print "Just a file!"
     else:
-        buildHashDictonaryForDirectoryContents(path)
+        buildHashDictonaryForDirectoryContents(path, dup_file, compare_dup_file)
         
     output = open(filename, 'wb')
     pickle.dump(d, output)
     output.close()
+    
+    dup_file.close()
+    compare_dup_file.close()
     
     finish = datetime.now()
     print "\nFinished: %s" % finish
@@ -70,7 +76,7 @@ def main(args):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 4:
+    if len(sys.argv) != 5:
         usage()
         sys.exit(2)
 
