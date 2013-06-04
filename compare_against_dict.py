@@ -7,8 +7,11 @@ from hash_fcns import *
 
 # Prints the hash digests for all contents of a directory.
 def checkHashDictonaryForDirectoryContents(directory, dictionary, dup_file, compare_file, non_dup_file):
+    d = {}
+    
     dup = 0
     non_dup = 0
+    multi_non_dup = 0
     total = 0
     for fileName, hashDigest in getHashDigestForDirectoryContents(directory):
         total = total + 1
@@ -17,12 +20,16 @@ def checkHashDictonaryForDirectoryContents(directory, dictionary, dup_file, comp
             dup_file.write(fileName + '\n')
             compare_file.write(fileName + " " + dictionary[hashDigest] + '\n')
         else:
-            non_dup = non_dup + 1
-            non_dup_file.write(fileName + '\n')
+            if hashDigest in d:
+                multi_non_dup = multi_non_dup + 1
+            else:
+                d[hashDigest] = fileName
+                non_dup = non_dup + 1
+                non_dup_file.write(fileName + '\n')
     print "Total Files: %s" % total
     print "Duplicate Files: %s" % dup
-    print "Non-Duplicate Files: %s" % non_dup
-
+    print "Non-Duplicate 1st time Files: %s" % non_dup
+    print "Non-Duplicate Repeat Files: %s" % multi_non_dup
 
 def processPathArgument(path):
     if not os.path.exists(path):
