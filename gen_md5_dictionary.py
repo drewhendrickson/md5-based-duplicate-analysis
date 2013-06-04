@@ -51,10 +51,10 @@ def main(args):
     print "\nFinished: %s" % finish
     print "Total time: %s\n" % (finish - start)
 
-    pkl_file = open(filename, 'rb')
-    dict_copy = pickle.load(pkl_file)
-    pkl_file.close()
-    print dict_copy
+#    pkl_file = open(filename, 'rb')
+#    dict_copy = pickle.load(pkl_file)
+#    pkl_file.close()
+#    print dict_copy
 
 
 if __name__ == '__main__':
