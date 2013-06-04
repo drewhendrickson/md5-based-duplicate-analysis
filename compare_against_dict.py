@@ -70,6 +70,7 @@ def main(args):
     print "Total time: %s\n" % (finish - start)
     
     dup_file.close()
+    compare_dup_file.close()
     non_dup_file.close()
 
 
