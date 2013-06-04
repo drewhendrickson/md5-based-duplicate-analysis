@@ -6,19 +6,19 @@ from hash_fcns import *
 
 
 # Prints the hash digests for all contents of a directory.
-def checkHashDictonaryForDirectoryContents(directory, dictionary, dup_file, non_dup_file):
+def checkHashDictonaryForDirectoryContents(directory, dictionary, dup_file, compare_file, non_dup_file):
     dup = 0
     non_dup = 0
     total = 0
     for fileName, hashDigest in getHashDigestForDirectoryContents(directory):
         total = total + 1
-        out = fileName + '\n'
         if hashDigest in dictionary:
             dup = dup + 1
-            dup_file.write(out)
+            dup_file.write(fileName + '\n')
+            compare_file.write(fileName + " " + dictionary[hashDigest] + '\n')
         else:
             non_dup = non_dup + 1
-            non_dup_file.write(out)
+            non_dup_file.write(fileName + '\n')
     print "Total Files: %s" % total
     print "Duplicate Files: %s" % dup
     print "Non-Duplicate Files: %s" % non_dup
@@ -33,7 +33,7 @@ def processPathArgument(path):
 
 # Display command line usage information.
 def usage():
-    print "\nUsage: compare_against_dict.py <path> <dict-file> <dup-file> <non-dup-file>\n"
+    print "\nUsage: compare_against_dict.py <path> <dict-file> <non-dup-file> <dup-file> <compare-dup-file>\n"
 
 # Handles processing when run from the command line.
 def main(args):
@@ -44,8 +44,9 @@ def main(args):
         usage()
         return
 
-    dup_file = open(args[2], 'w')
-    non_dup_file = open(args[3], 'w')
+    non_dup_file = open(args[2], 'w')
+    dup_file = open(args[3], 'w')
+    compare_dup_file = open(args[4], 'w')
 
     pkl_file = open(pkl, 'rb')
     d = pickle.load(pkl_file)
@@ -54,7 +55,7 @@ def main(args):
     start = datetime.now();
     print "\nStarting: %s\n" % start
         
-    checkHashDictonaryForDirectoryContents(path, d, dup_file, non_dup_file)
+    checkHashDictonaryForDirectoryContents(path, d, dup_file, compare_dup_file, non_dup_file)
     
     
     finish = datetime.now()
