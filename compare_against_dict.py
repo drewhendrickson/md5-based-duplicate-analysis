@@ -21,7 +21,9 @@ def checkHashDictonaryForDirectoryContents(directory, dictionary, dup_file, comp
             compare_file.write(fileName + " " + dictionary[hashDigest] + '\n')
         else:
             if hashDigest in d:
+                dup_file.write(fileName + '\n')
                 multi_non_dup = multi_non_dup + 1
+                dup = dup + 1
             else:
                 d[hashDigest] = fileName
                 non_dup = non_dup + 1
