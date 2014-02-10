@@ -10,18 +10,6 @@ Test to see which files in path <new_path> were contained in <path> using <pkl_f
 `python compare_against_dict.py <new_path> <pkl_file_name> <dup_file> <non_dup_file>`
 
 
-## Files to delete before running the python scripts:
-
-.DS_Store  
-.picasa.ini  
-Picasa.ini  
-Thumbs.db  
-.iPhoto.db  
-.ipspot_update  
-.DSS
-
-` find . -iname 'Thumbs.db' -type f -delete `
-
 
 ## Sample:
 
@@ -52,3 +40,20 @@ cd scripts
 ./del_files.sh ../image_info/dup.txt
 
 ```
+
+## Useful notes:
+### OSes drop tons of files into directories.
+### There are some iles to delete before running the python scripts:
+
+.DS_Store  
+.picasa.ini  
+Picasa.ini  
+Thumbs.db  
+.iPhoto.db  
+.ipspot_update  
+.DSS
+Icon
+
+### To delete these files using *nix command line:
+` find . -iname 'Thumbs.db' -type f -delete `
+
