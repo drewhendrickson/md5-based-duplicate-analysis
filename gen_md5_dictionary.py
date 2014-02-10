@@ -35,23 +35,21 @@ def processPathArgument(path):
 
 # Display command line usage information.
 def usage():
-    print "\nUsage: gen_md5_dictionary.py <path> <file> <dup-file> <comp-file>\n"
+    print "\nUsage: gen_md5_dictionary.py <path> <hash-file> <dup-file> <comp-file>\n"
 
 # Handles processing when run from the command line.
 def main(args):
     try:
         path = processPathArgument(args[0])
         filename = args[1]
+        dup_file = open(args[2], 'w')
+        compare_dup_file = open(args[3], 'w')
     except ValueError:
         usage()
         return
         
     start = datetime.now();
     print "\nStarting: %s\n" % start
-
-    dup_file = open(args[2], 'w')
-    compare_dup_file = open(args[3], 'w')
-
 
     if os.path.isfile(path):
         print "Just a file!"
@@ -68,12 +66,6 @@ def main(args):
     finish = datetime.now()
     print "\nFinished: %s" % finish
     print "Total time: %s\n" % (finish - start)
-
-#    pkl_file = open(filename, 'rb')
-#    dict_copy = pickle.load(pkl_file)
-#    pkl_file.close()
-#    print dict_copy
-
 
 if __name__ == '__main__':
     if len(sys.argv) != 5:
