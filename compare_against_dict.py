@@ -49,23 +49,26 @@ def main(args):
     try:
         path = processPathArgument(args[0])
         pkl = processPathArgument(args[1])
+        non_dup_file = open(args[2], 'w')
+        dup_file = open(args[3], 'w')
+        compare_dup_file = open(args[4], 'w')
+
     except ValueError:
         usage()
         return
 
-    non_dup_file = open(args[2], 'w')
-    dup_file = open(args[3], 'w')
-    compare_dup_file = open(args[4], 'w')
-
-    pkl_file = open(pkl, 'rb')
-    d = pickle.load(pkl_file)
-    pkl_file.close()
+    try:
+        pkl_file = open(pkl, 'rb')
+        d = pickle.load(pkl_file)
+        pkl_file.close()
+    except ValueError:
+        print "\nFailure to open and read the dictionary file.\n"
+        return
 
     start = datetime.now();
     print "\nStarting: %s\n" % start
         
     checkHashDictonaryForDirectoryContents(path, d, dup_file, compare_dup_file, non_dup_file)
-    
     
     finish = datetime.now()
     print "\nFinished: %s" % finish
