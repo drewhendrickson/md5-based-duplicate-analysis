@@ -3,11 +3,11 @@ Usage
 
 Create a file <plk_file_name> containing all of the md5 hashes of files in \<path>.
 
-`python gen_md5_dictionary.py <path> <pkl_file_name>`
+`python gen_md5_dictionary.py <path> <pkl_file_name> <dup_file> <compare_dup_file>`
 
 Test to see which files in path <new_path> were contained in <path> using <pkl_file_name>. Creates two files that contain the list of duplicate and non-duplicate files from <new_path>. 
 
-`python compare_against_dict.py <new_path> <pkl_file_name> <dup_file> <non_dup_file>`
+`python compare_against_dict.py <new_path> <pkl_file_name> <non_dup_file> <dup_file> <compare_dup_file>`
 
 
 
@@ -15,11 +15,11 @@ Test to see which files in path <new_path> were contained in <path> using <pkl_f
 
 ```
 // create <new_pkl> file containing all md5 hashes of files in <path1>
-// create two files that list the duplicates found in <path1>: orig_dup.txt, orig_comp.txt
+// it will also create two files that list the duplicates found in <path1> at the location of the final 2 parameters
 python gen_md5_dictionary.py <path1> <new_pkl> orig_dup.txt orig_comp.txt
 
 // compare files in <path2> to <new_pkl>
-// create 3 files: non_dup.txt, dup.txt, comp.txt
+// it will create 3 files at the location of the final 3 parameters
 python compare_against_dict.py <path2> <new_pkl> image_info/non_dup.txt image_info/dup.txt image_info/comp.txt
 
 cd scripts
